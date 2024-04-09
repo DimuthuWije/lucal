@@ -21,7 +21,9 @@
             document.getElementById("input").focus();
 	    document.getElementById("input").click();
         };
-
+	 function scrollLeft() {
+            window.scrollTo({ left: 0, behavior: 'smooth' }); // Scroll to the left smoothly
+        }
         function calculate() {
             const input = parseFloat(document.getElementById('input').value);
             let y = 0;
