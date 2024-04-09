@@ -28,7 +28,12 @@
             let out = 0;
             let resultMessage = "";
             let calculationMessage = "";
-
+	    if (isNaN(input)) {
+                document.getElementById('output').innerText = "";
+                document.getElementById('calculation1').innerText = "";
+ 		document.getElementById('calculation').innerText = "";
+                return; 
+            }
             if (input <= 700) {
                 out = input * 0.15 + input * 0.85 * 0.36;
                 out = out.toFixed(2); 
