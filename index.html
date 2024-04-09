@@ -4,25 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucal</title>
+    <style>
+        .calculation-line {
+            white-space: nowrap; 
+        }
+    </style>
 </head>
 <body>
-    <label for="input">Amount:</label>
-    <input type="number" id="input">
-    <button onclick="calculate()">Calculate</button>
-    <p id="output"></p>
-    <p id="calculation1"></p>
-    <p id="calculation"></p>
-
+    <label for="input">Enter input:</label>
+    <input type="number" id="input" oninput="calculate()">
+    <div id="output"></div>
+    <div id="calculation1" class="calculation-line"></div>
+    <div id="calculation" class="calculation-line"></div>
     <script>
-	window.onload = function() {
-            document.getElementById("input").focus();
+        window.onload = function() {
+            document.getElementById("input").focus();  
         };
-        document.getElementById("input").addEventListener("keydown", function(event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                calculate();
-            }
-        });
 
         function calculate() {
             const input = parseFloat(document.getElementById('input').value);
@@ -33,20 +30,20 @@
 
             if (input <= 700) {
                 out = input * 0.15 + input * 0.85 * 0.36;
-                out = out.toFixed(2);
+                out = out.toFixed(2); 
                 resultMessage = "Amount payable: " + out;
                 calculationMessage = "input*.15+input*.85*.36";
             } else {
                 y = input - 700;
                 out = 319.2 + y;
-                out = out.toFixed(2);
+                out = out.toFixed(2);  
                 resultMessage = "Amount payable: " + out;
                 calculationMessage = "700*.15+700*.85*.36 + (input-700)";
             }
 
             document.getElementById('output').innerText = resultMessage;
-	    document.getElementById('calculation1').innerText = "Calculation performed:";
-            document.getElementById('calculation').innerText = calculationMessage;
+            document.getElementById('calculation1').innerText = "Calculation Performed";
+	    document.getElementById('calculation').innerText = calculationMessage;
         }
     </script>
 </body>
