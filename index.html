@@ -7,13 +7,16 @@
 </head>
 <body>
     <label for="input">Amount:</label>
-    <input type="number" id="input" autofocus>
+    <input type="number" id="input">
     <button onclick="calculate()">Calculate</button>
     <p id="output"></p>
     <p id="calculation1"></p>
     <p id="calculation"></p>
 
     <script>
+	window.onload = function() {
+            document.getElementById("input").focus();
+        };
         document.getElementById("input").addEventListener("keydown", function(event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
