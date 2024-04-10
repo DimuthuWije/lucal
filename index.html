@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.6", maximum-scale=1>
+    <meta name="viewport" content="width=device-width, initial-scale=1.6, maximum-scale=1">
     <title>Lucal</title>
     <style>
         .calculation-line {
@@ -11,47 +11,55 @@
     </style>
 </head>
 <body>
-    <label for="input">Amount: </label>
-    <input type="number" id="input" oninput="calculate()" onfocus="scrollLeft()">
+    <div>
+        <label for="input">Amount : </label>
+        <input type="number" id="input" oninput="calculate()" onfocus="scrollLeft()">
+    </div>
+    <div>
+        <label for="tax">Tax (%) : </label>
+        <input type="number" id="tax" value="36" min="0" max="100" oninput="calculate()">
+        <span>%</span>
+    </div>
     <div id="output"></div>
     <div id="calculation1" class="calculation-line"></div>
     <div id="calculation" class="calculation-line"></div>
     <script>
         window.onload = function() {
             document.getElementById("input").focus();
-	    document.getElementById("input").click();
+            document.getElementById("input").click();
         };
-	 function scrollLeft() {
-            window.scrollTo({ left: 0, behavior: 'smooth' }); // Scroll to the left smoothly
+        function scrollLeft() {
+            window.scrollTo({ left: 0, behavior: 'smooth' });
         }
         function calculate() {
             const input = parseFloat(document.getElementById('input').value);
+            const tax = parseFloat(document.getElementById('tax').value) / 100;
             let y = 0;
             let out = 0;
             let resultMessage = "";
             let calculationMessage = "";
-	    if (isNaN(input)) {
+            if (isNaN(input)) {
                 document.getElementById('output').innerText = "";
                 document.getElementById('calculation1').innerText = "";
- 		document.getElementById('calculation').innerText = "";
+                document.getElementById('calculation').innerText = "";
                 return; 
             }
             if (input <= 700) {
-                out = input * 0.15 + input * 0.85 * 0.36;
+                out = input * 0.15 + input * 0.85 * tax;
                 out = out.toFixed(2); 
                 resultMessage = "Amount payable: " + out;
-                calculationMessage = "input*.15+input*.85*.36";
+                calculationMessage = "input*.15+input*.85*tax";
             } else {
                 y = input - 700;
-                out = 319.2 + y;
+                out = 700 * 0.15 + 700 * 0.85 * tax + y;
                 out = out.toFixed(2);  
                 resultMessage = "Amount payable: " + out;
-                calculationMessage = "700*.15+700*.85*.36 + (input-700)";
+                calculationMessage = "700*.15+700*.85*tax + (input-700)";
             }
 
             document.getElementById('output').innerText = resultMessage;
             document.getElementById('calculation1').innerText = "Calculation Performed:";
-	    document.getElementById('calculation').innerText = calculationMessage;
+            document.getElementById('calculation').innerText = calculationMessage;
         }
     </script>
 </body>
