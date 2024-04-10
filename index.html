@@ -47,13 +47,13 @@
                 out = input * 0.15 + input * 0.85 * tax;
                 out = out.toFixed(2); 
                 resultMessage = "Amount payable: " + out;
-                calculationMessage = "input*.15+input*.85*tax";
+                calculationMessage = "(input*.15)+(input*.85*tax)";
             } else {
                 y = input - 700;
                 out = 700 * 0.15 + 700 * 0.85 * tax + y;
                 out = out.toFixed(2);  
                 resultMessage = "Amount payable: " + out;
-                calculationMessage = "700*.15+700*.85*tax + (input-700)";
+                calculationMessage = "(700*.15)+(700*.85*tax)+(input-700)";
             }
 
             document.getElementById('output').innerText = resultMessage;
