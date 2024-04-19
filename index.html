@@ -8,10 +8,10 @@
         .calculation-line {
             white-space: nowrap; 
         }
-	button{
-		width: 60px;
-		height: 40px;
-		font-size: 16px;
+        button{
+            width: 60px;
+            height: 40px;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -19,10 +19,6 @@
     <div>
         <label for="input">Amount : </label>
         <input type="text" id="input" oninput="calculate()" onfocus="scrollLeft()">
-    </div>
-    <div>
-        <label for="tax">Tax (%) : </label>
-        <input type="number" id="tax" value="36" min="0" max="100" oninput="calculate()">
     </div>
     <div >
         <button onclick="addValue(1)">1</button>
@@ -40,6 +36,10 @@
         <button onclick="addDecimal()">.</button>
         <button onclick="addValue(0)">0</button>
         <button onclick="clearValue()">Clear</button>
+    </div>
+    <div>
+        <label for="tax">Tax (%) : </label>
+        <input type="number" id="tax" value="36" min="0" max="100" oninput="calculate()">
     </div>
     <div id="output"></div>
     <div id="calculation1" class="calculation-line"></div>
