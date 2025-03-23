@@ -1,89 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.6, maximum-scale=1">
-    <title>Lucal</title>
-    <style>
-        .calculation-line {
-            white-space: nowrap; 
-        }
-        button{
-            width: 60px;
-            height: 40px;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-    <div>
-        <label for="input">Amount : </label>
-        <input type="text" id="input" oninput="calculate()" onfocus="scrollLeft()">
-    </div>
-    <div >
-        <button onclick="addValue(1)">1</button>
-        <button onclick="addValue(2)">2</button>
-        <button onclick="addValue(3)">3</button>
-        <br>
-        <button onclick="addValue(4)">4</button>
-        <button onclick="addValue(5)">5</button>
-        <button onclick="addValue(6)">6</button>
-        <br>
-        <button onclick="addValue(7)">7</button>
-        <button onclick="addValue(8)">8</button>
-        <button onclick="addValue(9)">9</button>
-        <br>
-        <button onclick="addDecimal()">.</button>
-        <button onclick="addValue(0)">0</button>
-        <button onclick="clearValue()">Clear</button>
-    </div>
-    <div>
-        <label for="tax">Tax (%) : </label>
-        <input type="number" id="tax" value="36" min="0" max="100" oninput="calculate()">
-    </div>
-    <div id="output"></div>
-    <div id="calculation1" class="calculation-line"></div>
-    <div id="calculation" class="calculation-line"></div>
-    <button onclick="copyToClipboard()">Copy Result</button>
+<div id="output-container">
+    <span id="output"></span>
+    <button id="copyBtn" onclick="copyToClipboard()" style="display: none;">Copy</button>
+</div>
 
-    <script>
-        window.onload = function() {
-            document.getElementById("input").focus();
-            document.getElementById("input").click();
-        };
-        function scrollLeft() {
-            window.scrollTo({ left: 0, behavior: 'smooth' });
-        }
-        let currentValue = '';
-
-        function addValue(num) {
-            currentValue += num;
-            updateInputField();
-        }
-
-        function addDecimal() {
-            if (!currentValue.includes('.')) {
-                currentValue += '.';
-                updateInputField();
-            }
-        }
-
-        function clearValue() {
-            currentValue = '';
-            updateInputField();
-        }
-
-        function updateInputField() {
-            document.getElementById('input').value = currentValue;
-	    console.log("Last digit:", currentValue.charAt(currentValue.length - 1));
-	    if (currentValue.charAt(currentValue.length - 1) !== '.') {
-            	calculate();
-	    }
-
-		
-
-        }
-
+<script>
 function calculate() {
     const input = document.getElementById('input').value.trim();
     const tax = parseFloat(document.getElementById('tax').value) / 100;
@@ -96,6 +16,7 @@ function calculate() {
         document.getElementById('output').innerText = "";
         document.getElementById('calculation1').innerText = "";
         document.getElementById('calculation').innerText = "";
+        document.getElementById('copyBtn').style.display = "none"; 
         return;
     }
     
@@ -104,37 +25,37 @@ function calculate() {
         document.getElementById('output').innerText = "";
         document.getElementById('calculation1').innerText = "";
         document.getElementById('calculation').innerText = "";
+        document.getElementById('copyBtn').style.display = "none";
         return;
     }
     
     if (inputValue <= 700) {
         out = inputValue * 0.15 + inputValue * 0.85 * tax;
-        out = out.toFixed(2); 
-        resultMessage = "Amount payable: " + out;
         calculationMessage = "(input*.15)+(input*.85*tax)";
     } else {
         y = inputValue - 700;
         out = 700 * 0.15 + 700 * 0.85 * tax + y;
-        out = out.toFixed(2);  
-        resultMessage = "Amount payable: " + out;
         calculationMessage = "(700*.15)+(700*.85*tax)+(input-700)";
     }
+
+    out = out.toFixed(2);  
+    resultMessage = "Amount payable: " + out;
 
     document.getElementById('output').innerText = resultMessage;
     document.getElementById('calculation1').innerText = "Calculation Performed:";
     document.getElementById('calculation').innerText = calculationMessage;
-}
-function copyToClipboard() {
-    const outputText = document.getElementById('output').innerText;
-    if (outputText) {
-        navigator.clipboard.writeText(outputText)
-            .then(() => alert("Copied to clipboard!"))
-            .catch(err => console.error("Failed to copy: ", err));
-    } else {
-        alert("No result to copy!");
-    }
+    
+    document.getElementById('copyBtn').style.display = "inline-block";
+
+    document.getElementById('copyBtn').setAttribute('data-value', out);
 }
 
-    </script>
-</body>
-</html>
+function copyToClipboard() {
+    const outValue = document.getElementById('copyBtn').getAttribute('data-value');
+    if (outValue) {
+        navigator.clipboard.writeText(outValue)
+            .then(() => alert("Copied to clipboard: " + outValue))
+            .catch(err => console.error("Failed to copy: ", err));
+    }
+}
+</script>
