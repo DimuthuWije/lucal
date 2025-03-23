@@ -44,7 +44,7 @@
     <div id="output"></div>
     <div id="calculation1" class="calculation-line"></div>
     <div id="calculation" class="calculation-line"></div>
-
+    <button onclick="copyToClipboard()">Copy Result</button>
 
     <script>
         window.onload = function() {
@@ -123,6 +123,16 @@ function calculate() {
     document.getElementById('output').innerText = resultMessage;
     document.getElementById('calculation1').innerText = "Calculation Performed:";
     document.getElementById('calculation').innerText = calculationMessage;
+}
+function copyToClipboard() {
+    const outputText = document.getElementById('output').innerText;
+    if (outputText) {
+        navigator.clipboard.writeText(outputText)
+            .then(() => alert("Copied to clipboard!"))
+            .catch(err => console.error("Failed to copy: ", err));
+    } else {
+        alert("No result to copy!");
+    }
 }
 
     </script>
